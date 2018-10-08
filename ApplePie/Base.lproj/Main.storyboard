@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Yb1-4v-dq3">
                                 <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tree 7" translatesAutoresizingMaskIntoConstraints="NO" id="Xxd-Gx-JIk">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tree 0" translatesAutoresizingMaskIntoConstraints="NO" id="Xxd-Gx-JIk">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="374"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="oQj-II-4Rt">
@@ -307,6 +307,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Tree 7" width="600" height="945"/>
+        <image name="Tree 0" width="600" height="945"/>
     </resources>
 </document>
