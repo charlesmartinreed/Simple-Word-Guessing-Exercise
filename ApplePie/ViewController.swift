@@ -47,8 +47,18 @@ class ViewController: UIViewController {
     var incorrectMovesAllowed = 7
     
     var currentGame: Game! // because there's no value here between app launch and the beginning of the first round, we force unwrap
-    var totalWins = 0
-    var totalLosses = 0
+    
+    // whether a round is won or lost, a newRound will be triggered
+    var totalWins = 0 {
+        didSet {
+            newRound()
+        }
+    }
+    var totalLosses = 0 {
+        didSet {
+            newRound()
+        }
+    }
     
     //MARK:- IBOulets
     @IBOutlet weak var treeImageVIew: UIImageView!
@@ -74,19 +84,28 @@ class ViewController: UIViewController {
             // if let because not all buttons have titles
             let letter = Character(letterString.lowercased())
             currentGame.playerGuessed(letter: letter)
-            updateUI() // so we can reflect the amount of guesses via the tree
+            updateGameState()
         }
     }
     
     //MARK: Round building
     func newRound() {
-        // 1. Select a new word
-        // 2. reset incorrectMovesAllowed
-        // Both things are handled by our Game struct
         
-        let newWord = listOfWords.removeFirst()
-        currentGame = Game(word: newWord, incorrectMovesRemaining: incorrectMovesAllowed, guessedLetters: [])
-        updateUI()
+        // make sure that listOfWords is NOT EMPTY
+        if !listOfWords.isEmpty {
+            
+            // 1. Select a new word
+            // 2. reset incorrectMovesAllowed
+            // 3. renable letter buttons at round outset
+            let newWord = listOfWords.removeFirst()
+            currentGame = Game(word: newWord, incorrectMovesRemaining: incorrectMovesAllowed, guessedLetters: [])
+            enableLetterButtons(true)
+            updateUI()
+        } else {
+            enableLetterButtons(false)
+        }
+        
+        
     }
     
     //MARK: UI alterations
@@ -103,7 +122,26 @@ class ViewController: UIViewController {
         treeImageVIew.image = UIImage(named: "Tree \(currentGame.incorrectMovesRemaining)")
     }
     
-    //MARK: Displaying the word letters
+    func enableLetterButtons(_ enable: Bool) {
+        for button in letterButtons {
+            button.isEnabled = enable // true or false depending on when called
+        }
+    }
+    
+    //MARK: Game state logic
+    func updateGameState() {
+        // if no more guesses, game is lost
+        // if the word chosen at beginning of round equals the word built by the user's choices, game is won
+        // in all other cases, the game is on-going so update the UI
+        
+        if currentGame.incorrectMovesRemaining == 0 {
+            totalLosses += 1
+        } else if currentGame.word == currentGame.formattedWord {
+            totalWins += 1
+        } else {
+            updateUI()
+        }
+    }
     
     
 
